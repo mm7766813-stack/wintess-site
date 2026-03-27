@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>WINTESS</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      overflow: hidden;
+    }
+
+    h1 {
+      margin-top: 80px;
+      font-size: 50px;
+      text-shadow: 0 0 10px white;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: white;
+      color: #ff4d6d;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    a:hover {
+      background: #ffe0e6;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    /* сердечка */
+    .heart {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 6s linear infinite;
+      opacity: 0.7;
+      cursor: pointer;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -6px; left: 0; }
+    .heart::after { left: -6px; top: 0; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(45deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-10vh) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ГОЛОВНА -->
+<div id="home" class="screen active">
+  <h1>WINTESS ❤️</h1>
+  <p>Анюсік, ти для мене особлива! 💕</p>
+
+  <a onclick="showPage('page2')">Обіцянки та борги</a>
+</div>
+
+<!-- ДРУГА СТОРІНКА -->
+<div id="page2" class="screen">
+  <h1>Обіцянки та борги 💙</h1>
+
+  <p style="font-size:22px; margin-top:20px;">
+    Незабувай про 13 хвилин! ⏳💙
+  </p>
+
+  <a onclick="showPage('home')">⬅ Назад</a>
+</div>
+
+<script>
+  function showPage(page) {
+    document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+  }
+
+  // сердечка
+  for (let i = 0; i < 15; i++) {
+    let heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+
+    // клік по сердечку
+    heart.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      let text = document.createElement("div");
+      text.innerText = "Кохаю тебе ❤️";
+      text.style.position = "absolute";
+      text.style.left = e.clientX + "px";
+      text.style.top = e.clientY + "px";
+      text.style.color = "red";
+      text.style.fontWeight = "bold";
+      text.style.fontSize = "18px";
+      text.style.pointerEvents = "none";
+
+      document.body.appendChild(text);
+
+      setTimeout(() => {
+        text.remove();
+      }, 1500);
+    });
+
+    document.body.appendChild(heart);
+  }
+</script>
+
+</body>
+</html>
